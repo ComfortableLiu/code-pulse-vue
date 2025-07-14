@@ -7,6 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: process.env.PUBLISH_ENV === 'github' ? '/code-pulse-vue/' : undefined,
   plugins: [
     vue(),
     vueJsx(),
