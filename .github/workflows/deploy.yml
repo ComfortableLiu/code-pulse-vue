@@ -13,14 +13,14 @@ jobs:  # 工作流由一个或多个 job 构成
       - uses: actions/checkout@v4  # 借助这个 action 把仓库代码拉取到运行环境中
 
       - uses: actions/setup-node@v4  # 该 action 用于安装 Node.js 环境
-        with:  # 为 action 传递参数
-          node-version: 24  # 指定要安装的 Node.js 版本为 24
+        with:
+          node-version: 24
 
-      - run: npm install  # 执行 npm install 命令，安装项目所需的依赖
+      - run: npm install
 
-      - run: npm run build  # 执行 npm run build 命令，对项目进行构建，生成静态文件
+      - run: npm run build-only:github
 
-      - uses: peaceiris/actions-gh-pages@v3  # 利用这个 action 把构建好的文件部署到 GitHub Pages
-        with:  # 为 action 传递必要参数
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # 这是 GitHub 自动生成的 token，用于获取仓库的访问权限
-          publish_dir: ./dist  # 指定要部署的目录，这里是项目构建后生成的 dist 目录
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
