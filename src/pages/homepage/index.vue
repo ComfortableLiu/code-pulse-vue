@@ -1,10 +1,8 @@
 <template>
-  <div>主页</div>
+  这里是首页，还没想好写啥，先放着
 </template>
 
-<script setup
-        lang="ts">
-
+<script lang="ts" setup>
 </script>
 
 <style scoped>
