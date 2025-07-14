@@ -1,0 +1,26 @@
+name: Deploy to GitHub Pages  # 设定 GitHub Actions 工作流的名称，此名称会在 GitHub 仓库的 Actions 标签页中显示
+
+on:  # 用于定义触发工作流的条件
+  push:  # 当有代码推送到仓库时触发
+    branches:  # 指定具体触发的分支
+      - master  # 这里设定的是 master 分支，意味着当代码推送到 master 分支时，工作流就会启动
+
+jobs:  # 工作流由一个或多个 job 构成
+  deploy:  # 自定义的 job 名称，这里命名为 deploy
+    runs-on: ubuntu-latest  # 设定运行 job 的环境，选用的是最新版的 Ubuntu 系统
+
+    steps:  # job 由一系列 step 组成，这些 step 会按顺序依次执行
+      - uses: actions/checkout@v4  # 借助这个 action 把仓库代码拉取到运行环境中
+
+      - uses: actions/setup-node@v4  # 该 action 用于安装 Node.js 环境
+        with:  # 为 action 传递参数
+          node-version: 24  # 指定要安装的 Node.js 版本为 24
+
+      - run: npm install  # 执行 npm install 命令，安装项目所需的依赖
+
+      - run: npm run build  # 执行 npm run build 命令，对项目进行构建，生成静态文件
+
+      - uses: peaceiris/actions-gh-pages@v3  # 利用这个 action 把构建好的文件部署到 GitHub Pages
+        with:  # 为 action 传递必要参数
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # 这是 GitHub 自动生成的 token，用于获取仓库的访问权限
+          publish_dir: ./dist  # 指定要部署的目录，这里是项目构建后生成的 dist 目录
