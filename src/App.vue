@@ -5,6 +5,7 @@
         <a-menu
           mode="horizontal"
           :items="menuItems"
+          :selectedKeys="selectedKey"
         />
       </div>
     </header>
@@ -13,10 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import { allRoutes } from "@/router";
-import { RouterLink, RouterView } from "vue-router";
-import { ref, h } from "vue";
+import { allRoutes, allRoutesMap } from "@/router";
+import { RouterLink, RouterView, useRoute } from "vue-router";
+import { ref, h, computed } from "vue";
 import type { MenuProps } from "ant-design-vue";
+
+const route = useRoute()
 
 const menuItems = ref<MenuProps['items']>(allRoutes.filter(route => route.component || route.children).map(route => {
   return {
@@ -32,6 +35,12 @@ const menuItems = ref<MenuProps['items']>(allRoutes.filter(route => route.compon
     }))
   }
 }))
+
+const selectedKey = computed(() => {
+  const key = allRoutesMap.get(route.path)
+  return [key?.key || '']
+})
+
 </script>
 
 <style scoped>
