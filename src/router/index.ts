@@ -57,7 +57,7 @@ const routes: Readonly<RouteRecordRaw[]> = allRoutes.reduce<RouteRecordRaw[]>((p
 }, [])
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.PUBLISH_ENV === 'github' ? '/code-pulse-vue' : undefined),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
 
