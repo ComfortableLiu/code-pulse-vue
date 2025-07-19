@@ -1,4 +1,3 @@
-import SHA from '../pages/encryption/SHA.vue'
 import type { IRouteItem } from "@/router/type.ts";
 
 const encryption: IRouteItem = {
@@ -9,7 +8,7 @@ const encryption: IRouteItem = {
     path: '/sha',
     name: 'SHA加密',
     key: 'sha',
-    component: SHA,
+    component: () => import('@/pages/encryption/SHA.vue'),
   }]
 }
 
