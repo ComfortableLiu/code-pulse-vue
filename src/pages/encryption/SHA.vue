@@ -2,12 +2,8 @@
   <div class="container">
     <h1>SHA加密</h1>
     <div class="operation-container">
-      <a-textarea
-        allowClear
-        showCount
-        style="flex: 1"
-        placeholder="输入原文"
-        rows="10"
+      <code-editor
+        language="text"
         v-model:value="originalText"
       />
       <div class="btn-group">
@@ -33,12 +29,8 @@
           {{ operation.name }}
         </a-button>
       </div>
-      <a-textarea
-        allowClear
-        showCount
-        style="flex: 1"
-        placeholder="加密后的密文"
-        rows="10"
+      <code-editor
+        language="text"
         v-model:value="cipherText"
       />
     </div>
@@ -47,6 +39,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import CodeEditor from "@/components/CodeEditor.vue";
 
 interface ISHAOperationItem {
   name: string

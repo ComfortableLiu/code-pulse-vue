@@ -2,12 +2,8 @@
   <div class="container">
     <h1>URL编码</h1>
     <div class="operation-container">
-      <a-textarea
-        allowClear
-        showCount
-        style="flex: 1"
-        placeholder="想要编码的文字"
-        rows="10"
+      <code-editor
+        language="text"
         v-model:value="encodingText"
       />
       <div class="btn-group">
@@ -18,12 +14,8 @@
           <arrow-left theme="two-tone" size="24" :fill="['#000' ,'#fff']" />
         </a-button>
       </div>
-      <a-textarea
-        allowClear
-        showCount
-        style="flex: 1"
-        placeholder="编码后的文字"
-        rows="10"
+      <code-editor
+        language="text"
         v-model:value="decodingText"
       />
     </div>
@@ -33,6 +25,7 @@
 <script setup lang="ts">
 import { ArrowRight, ArrowLeft } from '@icon-park/vue-next'
 import { ref } from "vue";
+import CodeEditor from "@/components/CodeEditor.vue";
 
 // 解码后的文本
 const decodingText = ref('')
