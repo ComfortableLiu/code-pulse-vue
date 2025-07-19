@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import Homepage from '../pages/homepage/index.vue'
 import encryptionRoutes from "@/router/encryption.ts";
-import jsonRoutes from "@/router/json.tsx";
+import jsonRoutes from "@/router/json.ts";
 import encodingRoutes from "@/router/encoding.ts";
 import type { IRouteItem } from "@/router/type.ts";
 
