@@ -45,7 +45,7 @@
               v-for="route in (selectedFirstMenu?.children || [])"
               :to="`${selectedFirstMenu?.path || ''}${route.path}`"
               :key="route.key"
-              v-bind:class="{active: selectedSecondMenu?.key===route.key}"
+              v-bind:class="{active: selectedSecondMenu?.key === route.key}"
             >
               {{ route.name }}
             </router-link>
@@ -60,14 +60,18 @@
 <script setup lang="ts">
 import { allRoutes, allRoutesMap } from "@/router";
 import { RouterLink, RouterView, useRoute } from "vue-router";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 
 const route = useRoute()
 
 // 现在选择的一级菜单
 const selectedFirstMenu = computed(() => allRoutesMap.get(`/${route.path.split('/')[1]}`))
 // 现在选择的二级菜单
-const selectedSecondMenu = computed(() => allRoutesMap.get(`/${route.path.split('/')[2]}`))
+const selectedSecondMenu = computed(() => allRoutesMap.get(route.path))
+
+watch(selectedSecondMenu, () => {
+  console.log('lll---', selectedSecondMenu.value)
+})
 
 </script>
 
@@ -130,6 +134,10 @@ const selectedSecondMenu = computed(() => allRoutesMap.get(`/${route.path.split(
       height: 50px;
       border-bottom: 1px solid #EEEEEE;
       box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.1);
+
+      a.active {
+        background-color: #F1F1F1;
+      }
     }
   }
 }
