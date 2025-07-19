@@ -21,9 +21,7 @@ export const allRoutes = [
 
 // 用来做path=>item的映射的
 export const allRoutesMap: Map<string, IRouteItem> = allRoutes.reduce((previousValue, currentValue) => {
-  if (currentValue.component) {
-    previousValue.set(currentValue.path, currentValue)
-  }
+  previousValue.set(currentValue.path, currentValue)
   if (currentValue.children) {
     currentValue.children.forEach((route) => {
       if (!route.component) return
