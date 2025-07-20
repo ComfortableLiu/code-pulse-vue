@@ -69,10 +69,6 @@ const selectedFirstMenu = computed(() => allRoutesMap.get(`/${route.path.split('
 // 现在选择的二级菜单
 const selectedSecondMenu = computed(() => allRoutesMap.get(route.path))
 
-watch(selectedSecondMenu, () => {
-  console.log('lll---', selectedSecondMenu.value)
-})
-
 </script>
 
 <style scoped>
