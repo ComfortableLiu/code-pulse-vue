@@ -8,7 +8,7 @@
       class="editor"
       :style="props.style"
     />
-    <a-button-group>
+    <div class="extension-action">
       <a-button
         v-if="props.showFormat"
         @click="doFormatCode"
@@ -16,7 +16,7 @@
         格式化
       </a-button>
       <slot name="button" />
-    </a-button-group>
+    </div>
   </div>
 </template>
 
@@ -30,10 +30,14 @@ import { html } from "@codemirror/lang-html";
 import { markdown } from "@codemirror/lang-markdown";
 import { css } from "@codemirror/lang-css";
 import { LanguageSupport } from "@codemirror/language";
+import { autocompletion } from "@codemirror/autocomplete"
 import { EditorSelection, EditorState, StateEffect, StateField } from "@codemirror/state";
 import { Decoration } from "@codemirror/view";
+import type CodeEditor from "@/components/CodeEditor.vue";
 
-type CodeType = 'css' | 'html' | 'javascript' | 'json' | 'markdown' | 'text'
+type CodeType = 'css' | 'html' | 'javascript' | 'typescript' | 'json' | 'markdown' | 'text'
+
+export type CodeEditorInstance = InstanceType<typeof CodeEditor>;
 
 interface ICodeEditorProps {
   value: string
@@ -66,11 +70,14 @@ export interface FormatError {
 const langConfig: {
   [key in CodeType]: {
     extension?: LanguageSupport,
-    format: 'babel' | 'json' | 'html' | 'css' | 'markdown' | 'text'
+    format: 'babel' | 'json' | 'html' | 'css' | 'markdown' | 'text' | 'typescript'
   }
 } = {
   javascript: {
-    extension: javascript(),
+    extension: javascript({
+      typescript: false,
+      jsx: true
+    }),
     format: 'babel'
   },
   json: {
@@ -92,6 +99,13 @@ const langConfig: {
   text: {
     extension: undefined,
     format: 'text'
+  },
+  typescript: {
+    extension: javascript({
+      typescript: true,
+      jsx: true
+    }),
+    format: 'typescript'
   }
 }
 
@@ -149,6 +163,11 @@ onMounted(() => {
           }
         }),
         highlightField,
+        autocompletion({
+          activateOnTyping: true,
+          maxRenderedOptions: 20,
+          defaultKeymap: true,
+        }),
       ].filter(a => !!a)
     }),
     parent: editorContainer.value!
@@ -182,6 +201,7 @@ const doFormatCode = async () => {
   }
 }
 
+// 高亮报错行
 const handle = (line: number) => {
   if (line === 0) {
     editorView.dispatch({
@@ -198,14 +218,16 @@ const handle = (line: number) => {
   const deco = highlightTheme.range(lineObj.from)
 
   editorView.dispatch({
-    effects: addHighlight.of(deco)
-  })
-  editorView.dispatch({
     effects: [
+      addHighlight.of(deco),
       EditorView.scrollIntoView(EditorSelection.range(editorView.state.doc.line(line).from, editorView.state.doc.line(line).to)),
     ]
   })
 }
+
+defineExpose({
+  doFormatCode
+})
 
 // 组件销毁时清理
 onUnmounted(() => {
@@ -231,7 +253,11 @@ onUnmounted(() => {
   margin-top: 6px;
 }
 
-.highlight-line {
-  background-color: red;
+.extension-action {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 </style>
