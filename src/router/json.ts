@@ -9,6 +9,11 @@ const jsonRoutes: IRouteItem = {
     key: 'format',
     name: 'JSON格式化',
     component: () => import('@/pages/json/JsonFormat.vue'),
+  }, {
+    path: '/json2TypeScript',
+    key: 'json2TypeScript',
+    name: 'JSON转Typescript',
+    component: () => import('@/pages/json/JsonToTypescript.vue'),
   }]
 }
 

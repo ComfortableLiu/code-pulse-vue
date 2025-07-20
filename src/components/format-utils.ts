@@ -7,9 +7,9 @@ import prettierPluginEstree from "prettier/plugins/estree";
 /**
  * 格式化代码
  * @param text
- * @param parser - 'babel' | 'json' | 'html' | 'css' | 'markdown' | 'text'
+ * @param parser - 'babel' | 'json' | 'html' | 'css' | 'markdown' | 'text' | 'typescript'
  */
-export async function formatCode(text: string, parser: 'babel' | 'json' | 'html' | 'css' | 'markdown' | 'text') {
+export async function formatCode(text: string, parser: 'babel' | 'json' | 'html' | 'css' | 'markdown' | 'text' | 'typescript') {
   if (!parser || parser === 'text') return text
   return prettier.format(text, {
     parser: parser,
