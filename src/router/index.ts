@@ -3,7 +3,9 @@ import Homepage from '../pages/homepage/index.vue'
 import encryptionRoutes from "@/router/encryption.ts";
 import jsonRoutes from "@/router/json.ts";
 import encodingRoutes from "@/router/encoding.ts";
+import aboutRoutes from "@/router/about.ts";
 import type { IRouteItem } from "@/router/type.ts";
+import { maintainFrequentRouteHistory, manageRouteHistory } from "@/utils/router.ts";
 
 const homepageRoutes: IRouteItem = {
   path: '/',
@@ -14,9 +16,10 @@ const homepageRoutes: IRouteItem = {
 
 export const allRoutes = [
   homepageRoutes,
-  encryptionRoutes,
   jsonRoutes,
+  encryptionRoutes,
   encodingRoutes,
+  aboutRoutes,
 ]
 
 // 用来做path=>item的映射的
@@ -57,6 +60,15 @@ const routes: Readonly<RouteRecordRaw[]> = allRoutes.reduce<RouteRecordRaw[]>((p
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+})
+
+// 监听路由变化，记录历史访问记录
+router.afterEach((to, from, failure) => {
+  if (failure) return
+  // 维护最近历史记录
+  manageRouteHistory(to)
+  // 维护高频路由历史记录
+  maintainFrequentRouteHistory(to)
 })
 
 export default router
