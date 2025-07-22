@@ -11,7 +11,7 @@
                 :key="route.key"
               >
                 <router-link
-                  :to="route.children? '' : route.path"
+                  :to="route.children? `${route.path}${route.children[0].path}` : route.path"
                   v-bind:class="{active: selectedFirstMenu?.key===route.key}"
                 >
                   {{ route.name }}
