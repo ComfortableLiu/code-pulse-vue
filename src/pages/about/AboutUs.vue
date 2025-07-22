@@ -1,9 +1,7 @@
 <template>
-  <div class="container">
-    <first-visit-welcome />
-    <hr>
-    <contact-me />
-  </div>
+  <first-visit-welcome />
+  <hr>
+  <contact-me />
 </template>
 
 <script setup lang="ts">
@@ -12,12 +10,6 @@ import ContactMe from "@/components/ContactMe.vue";
 </script>
 
 <style scoped>
-.container {
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  padding-top: 24px;
-}
-
 hr {
   margin: 54px 0;
 }

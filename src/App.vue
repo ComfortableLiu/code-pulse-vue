@@ -54,7 +54,9 @@
           </div>
         </div>
       </header>
-      <router-view />
+      <div id="app-router-view">
+        <router-view />
+      </div>
     </a-app>
   </a-config-provider>
 </template>
@@ -138,5 +140,12 @@ const selectedSecondMenu = computed(() => allRoutesMap.get(route.path))
       }
     }
   }
+}
+
+#app-router-view {
+  display: flex;
+  max-width: var(--page-max-width);
+  flex-direction: column;
+  margin: 22px auto;
 }
 </style>

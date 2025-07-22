@@ -1,61 +1,59 @@
 <template>
-  <div class="container">
-    <!-- 首次访问的欢迎模块 -->
-    <first-visit-welcome
-      style="margin-top: 48px"
-      v-if="!recentRouteHistoryList?.length && !frequentRouteHistoryList?.length"
-    />
-    <!-- 主要功能区域 -->
+  <!-- 首次访问的欢迎模块 -->
+  <first-visit-welcome
+    style="margin-top: 48px"
+    v-if="!recentRouteHistoryList?.length && !frequentRouteHistoryList?.length"
+  />
+  <!-- 主要功能区域 -->
+  <div
+    class="main-feature-area"
+    v-else
+  >
+    <!-- 最近使用模块 -->
     <div
-      class="main-feature-area"
-      v-else
+      v-if="recentRouteHistoryList?.length"
+      class="base-component recently-used"
     >
-      <!-- 最近使用模块 -->
-      <div
-        v-if="recentRouteHistoryList?.length"
-        class="base-component recently-used"
-      >
-        <h2 class="title">最近使用</h2>
-        <div class="content-area">
-          <router-link
-            v-for="item in recentRouteHistoryList"
-            :key="item.path"
-            :to="item.path"
+      <h2 class="title">最近使用</h2>
+      <div class="content-area">
+        <router-link
+          v-for="item in recentRouteHistoryList"
+          :key="item.path"
+          :to="item.path"
+        >
+          <a-button
+            class="btn"
+            type="default"
           >
-            <a-button
-              class="btn"
-              type="default"
-            >
-              {{ item.name }}
-            </a-button>
-          </router-link>
-        </div>
-      </div>
-      <!-- 高频使用模块 -->
-      <div
-        v-if="frequentRouteHistoryList?.length"
-        class="base-component recently-used"
-      >
-        <h2 class="title">最常用</h2>
-        <div class="content-area">
-          <router-link
-            v-for="item in frequentRouteHistoryList"
-            :key="item.route.name"
-            :to="item.route.path"
-          >
-            <a-button
-              class="btn"
-              type="primary"
-            >
-              {{ item.route.name }}
-            </a-button>
-          </router-link>
-        </div>
+            {{ item.name }}
+          </a-button>
+        </router-link>
       </div>
     </div>
-    <hr>
-    <contact-me />
+    <!-- 高频使用模块 -->
+    <div
+      v-if="frequentRouteHistoryList?.length"
+      class="base-component recently-used"
+    >
+      <h2 class="title">最常用</h2>
+      <div class="content-area">
+        <router-link
+          v-for="item in frequentRouteHistoryList"
+          :key="item.route.name"
+          :to="item.route.path"
+        >
+          <a-button
+            class="btn"
+            type="primary"
+          >
+            {{ item.route.name }}
+          </a-button>
+        </router-link>
+      </div>
+    </div>
   </div>
+  <hr>
+  <contact-me />
 </template>
 
 <script lang="ts" setup>
@@ -99,40 +97,34 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.container {
+
+.main-feature-area {
   display: flex;
-  max-width: var(--page-max-width);
+  margin-top: 48px;
   flex-direction: column;
-  margin: 0 auto;
+  gap: 28px;
 
-  .main-feature-area {
+  .base-component {
     display: flex;
-    margin-top: 48px;
     flex-direction: column;
-    gap: 28px;
 
-    .base-component {
+    .title {
+      font-size: 22px;
+    }
+
+    .content-area {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      gap: 12px;
 
-      .title {
-        font-size: 22px;
-      }
-
-      .content-area {
-        display: flex;
-        flex-direction: row;
-        gap: 12px;
-
-        .btn {
-          height: 58px;
-        }
+      .btn {
+        height: 58px;
       }
     }
   }
+}
 
-  hr{
-    margin: 54px 0;
-  }
+hr {
+  margin: 54px 0;
 }
 </style>
