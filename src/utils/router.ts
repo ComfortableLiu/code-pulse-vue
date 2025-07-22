@@ -1,5 +1,6 @@
 import type { RouteLocationNormalized } from "vue-router";
 import { Localstorage } from "@/utils/storage.ts";
+import { flatRoutes } from "@/router";
 
 // 基础key
 export const ROUTE_HISTORY_KEY = 'code-pulse-route-'
@@ -28,10 +29,24 @@ function checkIsRouteBlackList(route: RouteLocationNormalized) {
 }
 
 /**
+ * 检查是否是内部拥有的路由
+ */
+function checkIsInternalRoute(route: RouteLocationNormalized) {
+  return !!flatRoutes.get(route.path)
+}
+
+/**
+ * 检查路由合法性，包括黑名单检查和内部路由检查
+ */
+function checkRouteValidity(route: RouteLocationNormalized) {
+  return !checkIsRouteBlackList(route) && checkIsInternalRoute(route)
+}
+
+/**
  * 维护路由历史访问记录
  */
 export function manageRouteHistory(to: RouteLocationNormalized) {
-  if (checkIsRouteBlackList(to)) return
+  if (!checkRouteValidity(to)) return
   const list = Localstorage.get<RouteLocationNormalized[]>(RECENT_VISITS_KEY) || []
   // 找一下是不是已经有记录了
   const index = list.findIndex(item => item.path === to.path)
@@ -68,7 +83,7 @@ export type IRouteFrequencyRecordList = IRouteFrequencyRecord[]
  * 维护路由高频历史访问记录，需要设置一个最高频率，不然会出现一个极值访问把其他功能挤得上不来
  */
 export function maintainFrequentRouteHistory(to: RouteLocationNormalized) {
-  if (checkIsRouteBlackList(to)) return
+  if (!checkRouteValidity(to)) return
   const MAX_FREQUENT_ROUTES = 10; // 设置最大频率
   const list = Localstorage.get<IRouteFrequencyRecordList>(FREQUENT_ROUTES_KEY) || [];
 
