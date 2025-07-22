@@ -3,12 +3,6 @@
 #
 # Recommended template: Node.gitignore
 
-# TODO: where does this rule come from?
-docs/_book
-
-# TODO: where does this rule come from?
-test/
-
 ### Node template
 # Logs
 logs
@@ -114,7 +108,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Docusaurus cache and generated files
 .docusaurus
@@ -144,9 +137,9 @@ dist
 ### Vuejs template
 # Recommended template: Node.gitignore
 
-node_modules/
 dist/
 npm-debug.log
 yarn-error.log
 
 .idea/
+.DS_Store
