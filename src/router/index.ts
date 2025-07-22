@@ -4,6 +4,7 @@ import encryptionRoutes from "@/router/encryption.ts";
 import jsonRoutes from "@/router/json.ts";
 import encodingRoutes from "@/router/encoding.ts";
 import aboutRoutes from "@/router/about.ts";
+import qrcodeRoutes from "@/router/qr-code.ts";
 import type { IRouteItem } from "@/router/type.ts";
 import { maintainFrequentRouteHistory, manageRouteHistory } from "@/utils/router.ts";
 
@@ -19,6 +20,7 @@ export const allRoutes = [
   jsonRoutes,
   encryptionRoutes,
   encodingRoutes,
+  qrcodeRoutes,
   aboutRoutes,
 ]
 
