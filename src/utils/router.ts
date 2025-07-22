@@ -15,9 +15,9 @@ const routeBlackList = [
   '/404',
   '/401',
   '/500',
+  '/about',
   '/about-us',
   '/about-us/contact-us',
-  '/about-us'
 ]
 
 /**
