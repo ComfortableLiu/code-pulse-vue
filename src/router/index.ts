@@ -24,9 +24,23 @@ export const allRoutes = [
   aboutRoutes,
 ]
 
-// 用来做path=>item的映射的
+// 用来做path=>item的映射的，同时包括一级和二级菜单
 export const allRoutesMap: Map<string, IRouteItem> = allRoutes.reduce((previousValue, currentValue) => {
   previousValue.set(currentValue.path, currentValue)
+  if (currentValue.children) {
+    currentValue.children.forEach((route) => {
+      if (!route.component) return
+      previousValue.set(`${currentValue.path || ''}${route.path}`, route)
+    })
+  }
+  return previousValue
+}, new Map<string, IRouteItem>())
+
+// 功能同上，但是只包括带页面的路由
+export const flatRoutes = allRoutes.reduce((previousValue, currentValue) => {
+  if (currentValue.component) {
+    previousValue.set(currentValue.path, currentValue)
+  }
   if (currentValue.children) {
     currentValue.children.forEach((route) => {
       if (!route.component) return
