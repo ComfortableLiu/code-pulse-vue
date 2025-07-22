@@ -1,47 +1,45 @@
 <template>
-  <div class="container">
-    <code-editor
-      v-model:value="jsonStr"
-      language="json"
-      show-format
-      style="max-height: 300px"
-      container-style="margin-top: 24px"
-      @format-error="handleFormatError"
-    >
-      <template #button>
-        <a-button class="button" @click="jsonStr=''">清空</a-button>
-        <a-button
-          class="button"
-          type="primary"
-          @click="transformTypescript"
-        >
-          转换
-        </a-button>
-<!--        <a-checkbox>-->
-<!--          需要分号-->
-<!--        </a-checkbox>-->
-<!--        <a-checkbox>-->
-<!--          添加导出-->
-<!--        </a-checkbox>-->
-      </template>
-    </code-editor>
-    <a-alert
-      v-show="formatErrorMessage"
-      type="error"
-    >
-      <template #message>
-        <pre>{{ formatErrorMessage }}</pre>
-      </template>
-    </a-alert>
-
-    <code-editor
-      ref="tsEditorRef"
-      v-model:value="typescriptStr"
-      language="typescript"
-      show-format
-      style="max-height: 300px"
-    />
-  </div>
+  <h1>JSON转Typescript</h1>
+  <code-editor
+    v-model:value="jsonStr"
+    language="json"
+    show-format
+    style="max-height: 300px"
+    @format-error="handleFormatError"
+  >
+    <template #button>
+      <a-button class="button" @click="jsonStr=''">清空</a-button>
+      <a-button
+        class="button"
+        type="primary"
+        @click="transformTypescript"
+      >
+        转换
+      </a-button>
+      <!--        <a-checkbox>-->
+      <!--          需要分号-->
+      <!--        </a-checkbox>-->
+      <!--        <a-checkbox>-->
+      <!--          添加导出-->
+      <!--        </a-checkbox>-->
+    </template>
+  </code-editor>
+  <a-alert
+    v-show="formatErrorMessage"
+    type="error"
+  >
+    <template #message>
+      <pre>{{ formatErrorMessage }}</pre>
+    </template>
+  </a-alert>
+  <br>
+  <code-editor
+    ref="tsEditorRef"
+    v-model:value="typescriptStr"
+    language="typescript"
+    show-format
+    style="max-height: 300px"
+  />
 </template>
 <script setup lang="ts">
 import CodeEditor, { type CodeEditorInstance, type FormatError } from "@/components/CodeEditor.vue";
@@ -122,11 +120,4 @@ const transformTypescript = () => {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  gap: 12px;
-}
 </style>

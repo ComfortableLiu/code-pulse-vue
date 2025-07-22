@@ -1,39 +1,37 @@
 <template>
-  <div class="container">
-    <h1>SHA加密</h1>
-    <div class="operation-container">
-      <code-editor
-        language="text"
-        v-model:value="originalText"
-      />
-      <div class="btn-group">
-        <a-button
-          v-for="operation in SHAOperationList"
-          :key="operation.name"
-          type="primary"
-          @click="operation.fun"
-        >
-          {{ operation.name }}
-        </a-button>
-      </div>
-      <br>
-
-      <a-input v-model:value="keyText" addon-before="HMAC-SHA密钥" />
-      <div class="btn-group">
-        <a-button
-          v-for="operation in hmacSHAOperationList"
-          :key="operation.name"
-          type="primary"
-          @click="operation.fun"
-        >
-          {{ operation.name }}
-        </a-button>
-      </div>
-      <code-editor
-        language="text"
-        v-model:value="cipherText"
-      />
+  <h1>SHA加密</h1>
+  <div class="operation-container">
+    <code-editor
+      language="text"
+      v-model:value="originalText"
+    />
+    <div class="btn-group">
+      <a-button
+        v-for="operation in SHAOperationList"
+        :key="operation.name"
+        type="primary"
+        @click="operation.fun"
+      >
+        {{ operation.name }}
+      </a-button>
     </div>
+    <br>
+
+    <a-input v-model:value="keyText" addon-before="HMAC-SHA密钥" />
+    <div class="btn-group">
+      <a-button
+        v-for="operation in hmacSHAOperationList"
+        :key="operation.name"
+        type="primary"
+        @click="operation.fun"
+      >
+        {{ operation.name }}
+      </a-button>
+    </div>
+    <code-editor
+      language="text"
+      v-model:value="cipherText"
+    />
   </div>
 </template>
 
@@ -121,21 +119,16 @@ const hmacSHAOperationList = ref<ISHAOperationItem[]>([{
 </script>
 
 <style scoped>
-.container {
-  max-width: var(--page-max-width);
-  margin: 0 auto;
+.operation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 
-  .operation-container {
+  .btn-group {
+    height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 12px;
-
-    .btn-group {
-      height: 100%;
-      display: flex;
-      flex-direction: row;
-      gap: 12px;
-    }
   }
 }
 </style>

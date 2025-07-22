@@ -1,228 +1,225 @@
 <template>
-  <div class="container">
-    <h1>二维码生成</h1>
+  <h1>二维码生成</h1>
+  <div class="workspace">
+    <a-form class="form">
+      <a-form-item
+        label="内容"
+        :rules="[{ required: true }]"
+      >
+        <a-textarea
+          v-model:value="content"
+          rows="3"
+          placeholder="输入要编码的文本、URL等..."
+        />
+      </a-form-item>
 
-    <div class="workspace">
-      <a-form class="form">
-        <a-form-item
-          label="内容"
-          :rules="[{ required: true }]"
+      <a-form-item
+        label="尺寸"
+        :rules="[{ required: true }]"
+      >
+        <a-input-number
+          disabled
+          v-model:value="size"
+          min="100"
+          max="1000"
+        />
+      </a-form-item>
+
+      <a-form-item
+        label="颜色"
+      >
+        <div
+          style="display: flex;flex-direction: row;gap: 8px;align-items: center;"
         >
-          <a-textarea
-            v-model:value="content"
-            rows="3"
-            placeholder="输入要编码的文本、URL等..."
+          <a-input
+            v-model:value="foreground"
+            style="width: 150px;"
           />
-        </a-form-item>
+          <a-input
+            type="color"
+            v-model:value="foreground"
+            style="width: 80px;"
+          />
+        </div>
+      </a-form-item>
 
+      <div class="more-form">
         <a-form-item
-          label="尺寸"
-          :rules="[{ required: true }]"
+          label="边缘空白（%）"
         >
           <a-input-number
-            disabled
-            v-model:value="size"
-            min="100"
-            max="1000"
+            v-model:value="margin"
           />
         </a-form-item>
 
-        <a-form-item
-          label="颜色"
-        >
-          <div
-            style="display: flex;flex-direction: row;gap: 8px;align-items: center;"
-          >
-            <a-input
-              v-model:value="foreground"
-              style="width: 150px;"
-            />
-            <a-input
-              type="color"
-              v-model:value="foreground"
-              style="width: 80px;"
-            />
-          </div>
-        </a-form-item>
+        <div class="hr-start">
+          <div class="line" />
+          高级设置
+          <div class="line" />
+        </div>
 
-        <div class="more-form">
-          <a-form-item
-            label="边缘空白（%）"
-          >
-            <a-input-number
-              v-model:value="margin"
-            />
-          </a-form-item>
-
-          <div class="hr-start">
-            <div class="line" />
-            高级设置
-            <div class="line" />
-          </div>
-
-          <div class="advanced-settings">
-            <a-form-item label="容错等级">
-              <a-radio-group v-model:value="level">
-                <a-radio-button value="L">L</a-radio-button>
-                <a-radio-button value="M">M</a-radio-button>
-                <a-radio-button value="Q">Q</a-radio-button>
-                <a-radio-button value="H">H</a-radio-button>
-              </a-radio-group>
-              <template #help>
+        <div class="advanced-settings">
+          <a-form-item label="容错等级">
+            <a-radio-group v-model:value="level">
+              <a-radio-button value="L">L</a-radio-button>
+              <a-radio-button value="M">M</a-radio-button>
+              <a-radio-button value="Q">Q</a-radio-button>
+              <a-radio-button value="H">H</a-radio-button>
+            </a-radio-group>
+            <template #help>
             <span>
               QR码具有“纠错功能”。即使编码变脏或破损，也可自动恢复数据。调高级别，纠错能力也相应提高，但编码尺寸也也会变大。<a
               href="https://www.qrcode.com/zh/about/error_correction.html" target="_blank">查看详情</a>
             </span>
-              </template>
-            </a-form-item>
+            </template>
+          </a-form-item>
 
-            <a-form-item label="背景颜色" help="普通二维码白色部分的颜色">
-              <div
-                style="display: flex;flex-direction: row;gap: 8px;align-items: center;"
-              >
-                <a-input
-                  v-model:value="background"
-                  style="width: 150px;"
-                />
-                <a-input
-                  type="color"
-                  v-model:value="background"
-                  style="width: 80px;"
-                />
-              </div>
-            </a-form-item>
-
-            <a-form-item label="logo设置">
-              <a-switch v-model:checked="showImageSettings" />
-            </a-form-item>
-
-            <a-form-item label="图片地址" v-show="showImageSettings" :rules="[{ required: showImageSettings }]">
+          <a-form-item label="背景颜色" help="普通二维码白色部分的颜色">
+            <div
+              style="display: flex;flex-direction: row;gap: 8px;align-items: center;"
+            >
               <a-input
-                type="url"
-                v-model:value="imageSettings.src"
+                v-model:value="background"
+                style="width: 150px;"
               />
-            </a-form-item>
+              <a-input
+                type="color"
+                v-model:value="background"
+                style="width: 80px;"
+              />
+            </div>
+          </a-form-item>
 
-            <a-form-item label="logo偏移量" v-show="showImageSettings">
-              <a-flex gap="middle">
-                <a-flex align="center">
-                  中心对齐：
-                  <a-switch
-                    :checked="imageCenter"
-                    @change="(checked: boolean) => {
+          <a-form-item label="logo设置">
+            <a-switch v-model:checked="showImageSettings" />
+          </a-form-item>
+
+          <a-form-item label="图片地址" v-show="showImageSettings" :rules="[{ required: showImageSettings }]">
+            <a-input
+              type="url"
+              v-model:value="imageSettings.src"
+            />
+          </a-form-item>
+
+          <a-form-item label="logo偏移量" v-show="showImageSettings">
+            <a-flex gap="middle">
+              <a-flex align="center">
+                中心对齐：
+                <a-switch
+                  :checked="imageCenter"
+                  @change="(checked: boolean) => {
                       imageSettings.x = checked ? undefined : 0;
                       imageSettings.y = checked ? undefined : 0 ;
                     }"
-                  />
-                </a-flex>
-                <a-flex align="center" gap="small">
-                  X:
-                  <a-input-number
-                    :disabled="imageCenter"
-                    v-model:value="imageSettings.x"
-                  />
-                  Y:
-                  <a-input-number
-                    :disabled="imageCenter"
-                    v-model:value="imageSettings.y"
-                  />
-                </a-flex>
+                />
               </a-flex>
-            </a-form-item>
+              <a-flex align="center" gap="small">
+                X:
+                <a-input-number
+                  :disabled="imageCenter"
+                  v-model:value="imageSettings.x"
+                />
+                Y:
+                <a-input-number
+                  :disabled="imageCenter"
+                  v-model:value="imageSettings.y"
+                />
+              </a-flex>
+            </a-flex>
+          </a-form-item>
 
-            <a-form-item label="logo宽度" v-show="showImageSettings" :rules="[{ required: showImageSettings }]">
-              <a-input-number
-                v-model:value="imageSettings.width"
+          <a-form-item label="logo宽度" v-show="showImageSettings" :rules="[{ required: showImageSettings }]">
+            <a-input-number
+              v-model:value="imageSettings.width"
+            />
+          </a-form-item>
+
+          <a-form-item label="logo高度" v-show="showImageSettings" :rules="[{ required: showImageSettings }]">
+            <a-input-number
+              type="number"
+              v-model:value="imageSettings.height"
+            />
+          </a-form-item>
+
+          <a-form-item label="是否“挖掘”图像周围的模块"
+                       help="这意味着嵌入图像重叠的任何模块都将使用背景颜色。使用此选项可确保图像周围的边缘清晰。嵌入透明图像时也很有用。"
+                       v-show="showImageSettings">
+            <a-switch v-model:checked="imageSettings.excavate" />
+          </a-form-item>
+
+          <a-form-item label="启用二维码渐变填充">
+            <a-switch v-model:checked="gradient" />
+          </a-form-item>
+
+          <a-form-item label="二维码渐变填充类型" v-show="gradient" :rules="[{ required: !!gradient }]">
+            <a-radio-group v-model:value="gradientType">
+              <a-radio-button value="linear">linear</a-radio-button>
+              <a-radio-button value="radial">radial</a-radio-button>
+            </a-radio-group>
+          </a-form-item>
+
+          <a-form-item v-show="gradient" label="渐变起始颜色" :rules="[{ required: !!gradient }]">
+            <div
+              style="display: flex;flex-direction: row;gap: 8px;align-items: center;"
+            >
+              <a-input
+                v-model:value="gradientStartColor"
+                style="width: 150px;"
               />
-            </a-form-item>
-
-            <a-form-item label="logo高度" v-show="showImageSettings" :rules="[{ required: showImageSettings }]">
-              <a-input-number
-                type="number"
-                v-model:value="imageSettings.height"
+              <a-input
+                type="color"
+                v-model:value="gradientStartColor"
+                style="width: 80px;"
               />
-            </a-form-item>
+            </div>
+          </a-form-item>
 
-            <a-form-item label="是否“挖掘”图像周围的模块"
-                         help="这意味着嵌入图像重叠的任何模块都将使用背景颜色。使用此选项可确保图像周围的边缘清晰。嵌入透明图像时也很有用。"
-                         v-show="showImageSettings">
-              <a-switch v-model:checked="imageSettings.excavate" />
-            </a-form-item>
-
-            <a-form-item label="启用二维码渐变填充">
-              <a-switch v-model:checked="gradient" />
-            </a-form-item>
-
-            <a-form-item label="二维码渐变填充类型" v-show="gradient" :rules="[{ required: !!gradient }]">
-              <a-radio-group v-model:value="gradientType">
-                <a-radio-button value="linear">linear</a-radio-button>
-                <a-radio-button value="radial">radial</a-radio-button>
-              </a-radio-group>
-            </a-form-item>
-
-            <a-form-item v-show="gradient" label="渐变起始颜色" :rules="[{ required: !!gradient }]">
-              <div
-                style="display: flex;flex-direction: row;gap: 8px;align-items: center;"
-              >
-                <a-input
-                  v-model:value="gradientStartColor"
-                  style="width: 150px;"
-                />
-                <a-input
-                  type="color"
-                  v-model:value="gradientStartColor"
-                  style="width: 80px;"
-                />
-              </div>
-            </a-form-item>
-
-            <a-form-item v-show="gradient" label="渐变结束颜色" :rules="[{ required: !!gradient }]">
-              <div
-                style="display: flex;flex-direction: row;gap: 8px;align-items: center;"
-              >
-                <a-input
-                  v-model:value="gradientEndColor"
-                  style="width: 150px;"
-                />
-                <a-input
-                  type="color"
-                  v-model:value="gradientEndColor"
-                  style="width: 80px;"
-                />
-              </div>
-            </a-form-item>
-          </div>
+          <a-form-item v-show="gradient" label="渐变结束颜色" :rules="[{ required: !!gradient }]">
+            <div
+              style="display: flex;flex-direction: row;gap: 8px;align-items: center;"
+            >
+              <a-input
+                v-model:value="gradientEndColor"
+                style="width: 150px;"
+              />
+              <a-input
+                type="color"
+                v-model:value="gradientEndColor"
+                style="width: 80px;"
+              />
+            </div>
+          </a-form-item>
         </div>
-      </a-form>
-      <div class="vertical-divider" />
-      <div class="qrcode-preview">
-        <h2>二维码预览</h2>
-        <div class="qrcode-canvas" v-if="content">
-          <qrcode-canvas
-            ref="qrcode"
-            :value="content"
-            :size="300"
-            :margin="margin"
-            :level="level"
-            :background="background"
-            :foreground="foreground"
-            :image-settings="showImageSettings? imageSettings: undefined"
-            :gradient="gradient"
-            :gradient-type="gradientType"
-            :gradient-start-color="gradientStartColor"
-            :gradient-end-color="gradientEndColor"
-          ></qrcode-canvas>
-        </div>
+      </div>
+    </a-form>
+    <div class="vertical-divider" />
+    <div class="qrcode-preview">
+      <h2>二维码预览</h2>
+      <div class="qrcode-canvas" v-if="content">
+        <qrcode-canvas
+          ref="qrcode"
+          :value="content"
+          :size="300"
+          :margin="margin"
+          :level="level"
+          :background="background"
+          :foreground="foreground"
+          :image-settings="showImageSettings? imageSettings: undefined"
+          :gradient="gradient"
+          :gradient-type="gradientType"
+          :gradient-start-color="gradientStartColor"
+          :gradient-end-color="gradientEndColor"
+        ></qrcode-canvas>
+      </div>
 
-        <div v-if="content">
-          <a-button
-            @click="downloadQrCode"
-            style="display: flex;flex-direction: row;align-items: center;"
-          >
-            <down-picture theme="outline" size="16" fill="#333" />
-            下载二维码
-          </a-button>
-        </div>
+      <div v-if="content">
+        <a-button
+          @click="downloadQrCode"
+          style="display: flex;flex-direction: row;align-items: center;"
+        >
+          <down-picture theme="outline" size="16" fill="#333" />
+          下载二维码
+        </a-button>
       </div>
     </div>
   </div>
@@ -231,7 +228,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { type GradientType, type ImageSettings, type Level, QrcodeCanvas } from 'qrcode.vue';
-import { FoldUpOne, ExpandDownOne, DownPicture } from '@icon-park/vue-next'
+import { DownPicture } from '@icon-park/vue-next'
 import { isUndefined } from "@/utils";
 
 // 状态管理
@@ -285,13 +282,6 @@ const downloadQrCode = () => {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-  max-width: var(--page-max-width);
-  flex-direction: column;
-  margin: 0 auto;
-}
-
 .workspace {
   display: flex;
   flex-direction: row;

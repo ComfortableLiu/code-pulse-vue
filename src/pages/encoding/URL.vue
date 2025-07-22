@@ -1,24 +1,22 @@
 <template>
-  <div class="container">
-    <h1>URL编码</h1>
-    <div class="operation-container">
-      <code-editor
-        language="text"
-        v-model:value="encodingText"
-      />
-      <div class="btn-group">
-        <a-button @click="encodeURL">
-          <arrow-right theme="two-tone" size="24" :fill="['#000' ,'#fff']" />
-        </a-button>
-        <a-button @click="decodeURL">
-          <arrow-left theme="two-tone" size="24" :fill="['#000' ,'#fff']" />
-        </a-button>
-      </div>
-      <code-editor
-        language="text"
-        v-model:value="decodingText"
-      />
+  <h1>URL编码</h1>
+  <div class="operation-container">
+    <code-editor
+      language="text"
+      v-model:value="encodingText"
+    />
+    <div class="btn-group">
+      <a-button @click="encodeURL">
+        <arrow-right theme="two-tone" size="24" :fill="['#000' ,'#fff']" />
+      </a-button>
+      <a-button @click="decodeURL">
+        <arrow-left theme="two-tone" size="24" :fill="['#000' ,'#fff']" />
+      </a-button>
     </div>
+    <code-editor
+      language="text"
+      v-model:value="decodingText"
+    />
   </div>
 </template>
 
@@ -43,23 +41,18 @@ const decodeURL = () => {
 </script>
 
 <style scoped>
-.container {
-  max-width: var(--page-max-width);
-  margin: 0 auto;
+.operation-container {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
 
-  .operation-container {
+  .btn-group {
+    height: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
     gap: 12px;
-
-    .btn-group {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-content: center;
-      justify-content: center;
-      gap: 12px;
-    }
   }
 }
 </style>

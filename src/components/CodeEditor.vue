@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { type CSSProperties, onMounted, onUnmounted, ref, watch } from "vue";
 import { basicSetup, EditorView } from "codemirror";
-import { formatCode } from "@/components/format-utils.ts";
+import { formatCode } from "@/utils/format-utils.ts";
 import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
 import { html } from "@codemirror/lang-html";
@@ -239,9 +239,12 @@ onUnmounted(() => {
 
 <style scoped>
 .container {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   min-height: 300px;
   width: 100%;
+  gap: 8px;
 }
 
 .editor {
