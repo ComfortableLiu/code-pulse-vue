@@ -87,12 +87,16 @@ function handleStorageChange(e?: StorageEvent) {
 }
 
 onMounted(() => {
-  window.addEventListener("storage", handleStorageChange)
+  if (!import.meta.env.SSR) {
+    window.addEventListener("storage", handleStorageChange)
+  }
   handleStorageChange()
 })
 
 onUnmounted(() => {
-  window.removeEventListener("storage", handleStorageChange)
+  if (!import.meta.env.SSR) {
+    window.removeEventListener("storage", handleStorageChange)
+  }
 })
 </script>
 

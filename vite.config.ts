@@ -16,17 +16,17 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return id.toString().split('node_modules/')[1].split('/')[0].toString();
-          }
-
-          // 按路由拆分 (示例：假设使用 React Router)
-          if (id.includes('src/pages/')) {
-            const pageName = id.split('src/pages/')[1].split('/');
-            return `page-${pageName.reduce((prev, curr) => `${prev}-${curr}`,'')}`;
-          }
-        },
+        // manualChunks(id) {
+        //   if (id.includes('node_modules')) {
+        //     return id.toString().split('node_modules/')[1].split('/')[0].toString();
+        //   }
+        //
+        //   // 按路由拆分
+        //   if (id.includes('src/pages/')) {
+        //     const pageName = id.split('src/pages/')[1].split('/');
+        //     return `page-${pageName.reduce((prev, curr) => `${prev}-${curr}`, '')}`;
+        //   }
+        // },
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
