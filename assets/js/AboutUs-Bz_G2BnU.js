@@ -1,1 +1,0 @@
-import{F as o,C as s}from"./ContactMe-BMwZ1QSf.js";import{d as a,c as r,h as t,g as n,F as c,e as l,_ as m}from"./app-CcCu1TmL.js";import"./index-CN3XqZ4y.js";const p=a({__name:"AboutUs",setup(_){return(u,e)=>(l(),r(c,null,[t(o),e[0]||(e[0]=n("hr",null,null,-1)),t(s)],64))}}),F=m(p,[["__scopeId","data-v-2b884e04"]]);export{F as default};
