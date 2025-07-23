@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://comfortableliu.github.io/code-pulse-vue/sitemap.xml
