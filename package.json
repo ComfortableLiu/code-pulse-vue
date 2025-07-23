@@ -12,6 +12,7 @@
     "build-only": "vite build",
     "build-only:ssg": "vite-ssg build",
     "build-only:github": "cross-env PUBLISH_ENV=github vite build",
+    "build-only:github:ssg": "cross-env PUBLISH_ENV=github vite-ssg build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix"
   },
