@@ -12,6 +12,9 @@ export const FREQUENT_ROUTES_KEY = ROUTE_HISTORY_KEY + 'frequent-routes'
 // 不记录历史的路由黑名单
 const routeBlackList = [
   '/',
+  '/index',
+  '/home',
+  '/homepage',
   '/login',
   '/404',
   '/401',

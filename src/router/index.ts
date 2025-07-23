@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { type RouteRecordRaw } from 'vue-router'
 import Homepage from '../pages/homepage/index.vue'
 import encryptionRoutes from "@/router/encryption.ts";
 import jsonRoutes from "@/router/json.ts";
@@ -6,13 +6,21 @@ import encodingRoutes from "@/router/encoding.ts";
 import aboutRoutes from "@/router/about.ts";
 import qrcodeRoutes from "@/router/qr-code.ts";
 import type { IRouteItem } from "@/router/type.ts";
-import { maintainFrequentRouteHistory, manageRouteHistory } from "@/utils/router.ts";
 
 const homepageRoutes: IRouteItem = {
   path: '/',
-  name: 'Homepage',
+  name: '首页',
   key: 'homepage',
+  alias: ['/home', '/index', '/homepage'],
   component: Homepage,
+  meta: {
+    seoHead: {
+      meta: [{
+        name: 'description',
+        content: '本站致力于为广大开发者提供一系列实用的小工具，帮助大家提升开发效率、简化日常工作流程。'
+      }]
+    }
+  }
 }
 
 export const allRoutes = [
@@ -51,13 +59,14 @@ export const flatRoutes = allRoutes.reduce((previousValue, currentValue) => {
 }, new Map<string, IRouteItem>())
 
 // 扁平化路由，用来注册用，实际业务中是需要有父子路由的，所以这个实际业务中没有用
-const routes: Readonly<RouteRecordRaw[]> = allRoutes.reduce<RouteRecordRaw[]>((previousValue, currentValue) => {
+export const routes: Readonly<RouteRecordRaw[]> = allRoutes.reduce<RouteRecordRaw[]>((previousValue, currentValue) => {
   const list: RouteRecordRaw[] = []
   if (currentValue.component) {
     list.push({
       path: currentValue.path,
       component: currentValue.component,
       name: currentValue.name,
+      alias: currentValue.alias || [],
     })
   }
   if (currentValue.children) {
@@ -67,24 +76,9 @@ const routes: Readonly<RouteRecordRaw[]> = allRoutes.reduce<RouteRecordRaw[]>((p
         path: `${currentValue.path || ''}${route.path}`,
         component: route.component,
         name: route.name,
+        alias: currentValue.alias || [],
       })
     })
   }
   return [...previousValue, ...list]
 }, [])
-
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
-})
-
-// 监听路由变化，记录历史访问记录
-router.afterEach((to, from, failure) => {
-  if (failure) return
-  // 维护最近历史记录
-  manageRouteHistory(to)
-  // 维护高频路由历史记录
-  maintainFrequentRouteHistory(to)
-})
-
-export default router

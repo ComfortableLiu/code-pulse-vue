@@ -18,7 +18,7 @@ jobs:  # 工作流由一个或多个 job 构成
 
       - run: npm install
 
-      - run: npm run build-only:github
+      - run: npm run build-only:ssg
 
       - uses: peaceiris/actions-gh-pages@v3
         with:

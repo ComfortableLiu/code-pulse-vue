@@ -272,12 +272,14 @@ watch([() => imageSettings.value.width, () => imageSettings.value.height, () => 
 
 // 下载二维码
 const downloadQrCode = () => {
-  const qrcode = document.querySelector('canvas')
-  if (!qrcode) return
-  const link = document.createElement('a');
-  link.download = 'qrcode.png';
-  link.href = qrcode.toDataURL('image/png');
-  link.click();
+  if (!import.meta.env.SSR) {
+    const qrcode = document.querySelector('canvas')
+    if (!qrcode) return
+    const link = document.createElement('a');
+    link.download = 'qrcode.png';
+    link.href = qrcode.toDataURL('image/png');
+    link.click();
+  }
 }
 </script>
 
