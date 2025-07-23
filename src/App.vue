@@ -7,7 +7,7 @@
           <div class="menu-first">
             <div class="content">
               <a-dropdown
-                v-for="route in all"
+                v-for="route in allRoutes"
                 :key="route.key"
               >
                 <router-link
@@ -67,8 +67,6 @@ import { RouterLink, RouterView, useRoute } from "vue-router";
 import { computed } from "vue";
 
 const route = useRoute()
-
-const all = allRoutes.filter(item => !item.redirect)
 
 // 现在选择的一级菜单
 const selectedFirstMenu = computed(() => allRoutesMap.get(`/${route.path.split('/')[1]}`))
