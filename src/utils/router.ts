@@ -13,6 +13,8 @@ export const FREQUENT_ROUTES_KEY = ROUTE_HISTORY_KEY + 'frequent-routes'
 const routeBlackList = [
   '/',
   '/index',
+  '/home',
+  '/homepage',
   '/login',
   '/404',
   '/401',
