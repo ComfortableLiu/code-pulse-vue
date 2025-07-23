@@ -55,12 +55,12 @@ export const createApp = ViteSSG(
     })
 
     // 处理.html后缀路由
-    router.beforeEach((to, from, next) => {
-      if (to.path.endsWith('.html')) {
-        next(to.path.replace(/\.html$/, ''))
-      } else {
-        next()
-      }
-    })
+    // router.beforeEach((to, from, next) => {
+    //   if (to.path.endsWith('.html')) {
+    //     next(to.path.replace(/\.html$/, ''))
+    //   } else {
+    //     next()
+    //   }
+    // })
   },
 )
