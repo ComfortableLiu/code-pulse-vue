@@ -3,13 +3,33 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import sitemapPlugin from "vite-plugin-sitemap";
+import { routes } from "./src/router";
+
+const isGithub = process.env.PUBLISH_ENV === 'github';
+
+const list = routes.reduce<string[]>((previousValue, currentValue) => {
+  const list: string[] = []
+  list.push(currentValue.path);
+  (currentValue.alias as [] || []).forEach(item => list.push(item))
+  return [...previousValue, ...list]
+}, [])
 
 export default defineConfig({
-  base: process.env.PUBLISH_ENV === 'github' ? '/code-pulse-vue' : undefined,
+  base: isGithub ? '/code-pulse-vue' : undefined,
   plugins: [
     vue(),
     vueJsx(),
     vueDevTools(),
+    sitemapPlugin({
+      hostname: isGithub ? 'https://comfortableliu.github.io/code-pulse-vue/' : '',
+      generateRobotsTxt: true,
+      robots: [{
+        allow: '/',
+        userAgent: '*',
+      }],
+      dynamicRoutes: list,
+    })
   ],
   build: {
     rollupOptions: {
