@@ -1,1 +1,0 @@
-import{d as t,c as a,b as s,a as o,F as n,o as r,s as c,C as l,_}from"./app-CBPfqGWE.js";const p=t({__name:"AboutUs",setup(u){return(m,e)=>(r(),a(n,null,[s(c),e[0]||(e[0]=o("hr",null,null,-1)),s(l)],64))}}),i=_(p,[["__scopeId","data-v-2b884e04"]]);export{i as default};
