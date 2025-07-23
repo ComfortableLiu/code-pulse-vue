@@ -1,18 +1,17 @@
 import { type RouteRecordRaw } from 'vue-router'
-import Homepage from '../pages/homepage/index.vue'
-import encryptionRoutes from "@/router/encryption.ts";
-import jsonRoutes from "@/router/json.ts";
-import encodingRoutes from "@/router/encoding.ts";
-import aboutRoutes from "@/router/about.ts";
-import qrcodeRoutes from "@/router/qr-code.ts";
-import type { IRouteItem } from "@/router/type.ts";
+import encryptionRoutes from "../router/encryption.ts";
+import jsonRoutes from "../router/json.ts";
+import encodingRoutes from "../router/encoding.ts";
+import aboutRoutes from "../router/about.ts";
+import qrcodeRoutes from "../router/qr-code.ts";
+import type { IRouteItem } from "./type";
 
 const homepageRoutes: IRouteItem = {
   path: '/',
   name: '首页',
   key: 'homepage',
   alias: ['/home', '/index', '/homepage'],
-  component: Homepage,
+  component: () => import('@/pages/homepage/index.vue'),
   meta: {
     seoHead: {
       meta: [{
@@ -62,11 +61,21 @@ export const flatRoutes = allRoutes.reduce((previousValue, currentValue) => {
 export const routes: Readonly<RouteRecordRaw[]> = allRoutes.reduce<RouteRecordRaw[]>((previousValue, currentValue) => {
   const list: RouteRecordRaw[] = []
   if (currentValue.component) {
+    const alias = [...(currentValue.alias || [])].reduce<string[]>((p, c) => {
+      const l = [...p, c,]
+      if (c !== '/') {
+        l.push(`${c}.html`)
+      }
+      return l
+    }, [])
+    if (currentValue.path !== '/') {
+      alias.push(`${currentValue.path}.html`)
+    }
     list.push({
       path: currentValue.path,
       component: currentValue.component,
       name: currentValue.name,
-      alias: [...(currentValue.alias || []), currentValue.path + '.html'],
+      alias,
     })
   }
   if (currentValue.children) {
