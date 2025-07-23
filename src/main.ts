@@ -1,4 +1,3 @@
-import { createPinia } from "pinia";
 import App from "@/App.vue";
 import { allRoutesMap, routes } from "@/router";
 import 'ant-design-vue/dist/reset.css';
@@ -11,24 +10,17 @@ import { ViteSSG } from "vite-ssg";
 import { maintainFrequentRouteHistory, manageRouteHistory } from "@/utils/router.ts";
 
 // const app = createApp(App)
-// app.use(createPinia())
 // app.use(router)
 // app.use(Antd)
 // // SEO
 // app.use(createHead())
-//
 // app.mount('#app')
 export const createApp = ViteSSG(
   App,
   { routes },
   ({ app, router }) => {
-    app.use(createPinia())
-    app.use(router)
     app.use(Antd)
-    // SEO
     app.use(createHead())
-
-    // app.mount('#app')
 
     function handleHead(route: IRouteItem): UseHeadInput {
       const routeMeta = route?.meta?.seoHead

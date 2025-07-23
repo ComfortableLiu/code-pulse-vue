@@ -66,17 +66,18 @@ export const routes: Readonly<RouteRecordRaw[]> = allRoutes.reduce<RouteRecordRa
       path: currentValue.path,
       component: currentValue.component,
       name: currentValue.name,
-      alias: currentValue.alias || [],
+      alias: [...(currentValue.alias || []), currentValue.path + '.html'],
     })
   }
   if (currentValue.children) {
     currentValue.children.forEach((route) => {
       if (!route.component) return
+      const path = `${currentValue.path || ''}${route.path}`
       list.push({
-        path: `${currentValue.path || ''}${route.path}`,
+        path,
         component: route.component,
         name: route.name,
-        alias: currentValue.alias || [],
+        alias: [...(route.alias || []), path + '.html'],
       })
     })
   }
