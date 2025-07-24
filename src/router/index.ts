@@ -11,7 +11,7 @@ const homepageRoutes: IRouteItem = {
   name: '首页',
   key: 'homepage',
   alias: ['/home', '/index', '/homepage'],
-  component: () => import('@/pages/homepage/index.vue'),
+  component: () => import('@/pages/homepage/HomePage.vue'),
   meta: {
     seoHead: {
       meta: [{
