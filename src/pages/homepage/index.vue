@@ -2,12 +2,11 @@
   <!-- 首次访问的欢迎模块 -->
   <first-visit-welcome
     style="margin-top: 48px"
-    v-if="!recentRouteHistoryList?.length && !frequentRouteHistoryList?.length"
   />
   <!-- 主要功能区域 -->
   <div
+    v-if="recentRouteHistoryList?.length || frequentRouteHistoryList?.length"
     class="main-feature-area"
-    v-else
   >
     <!-- 最近使用模块 -->
     <div
@@ -52,8 +51,6 @@
       </div>
     </div>
   </div>
-  <hr>
-  <contact-me />
 </template>
 
 <script lang="ts" setup>

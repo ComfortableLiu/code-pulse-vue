@@ -4,29 +4,34 @@
     <div class="channel">
       <!-- 微信二维码 -->
       <div class="channel-item">
-        <wechat theme="two-tone" size="36" :fill="['#000' ,'#fff']" />
-        <img
-          class="wechat-qr-code"
-          :src="WeChatQRCode"
-          alt="微信号：xiaoyaochengjushi "
-        >
+        <a-tooltip color="#FFFFFF">
+          <wechat theme="outline" size="36" fill="#000" />
+          <template #title>
+            <img
+              alt="wechat"
+              :src="WeChatQRCode"
+              height="408"
+              width="300"
+            />
+          </template>
+        </a-tooltip>
       </div>
       <!-- GitHub -->
       <div class="channel-item">
-
         <a
           href="https://github.com/xiaoyaochengjushi"
           target="_blank"
         >
-          <github theme="two-tone" size="36" :fill="['#000' ,'#fff']" />
+          <github theme="outline" size="36" fill="#000" />
         </a>
-        <br>
+      </div>
+      <!-- Email -->
+      <div class="channel-item">
         <a
-          href="https://github.com/xiaoyaochengjushi"
-          style="font-size: 22px"
+          href="mailto:liuchengxu1994@gmail.com"
           target="_blank"
         >
-          GitHub
+          <mail class="icon" theme="outline" size="36" fill="#000000" />
         </a>
       </div>
     </div>
@@ -34,8 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import WeChatQRCode from "/public/WeChat.jpg";
-import { Wechat, Github } from '@icon-park/vue-next'
+import WeChatQRCode from "/public/WeChat.png";
+import { Wechat, Github, Mail } from '@icon-park/vue-next'
 
 </script>
 
@@ -48,12 +53,5 @@ import { Wechat, Github } from '@icon-park/vue-next'
   display: flex;
   flex-direction: row;
   gap: 12px;
-}
-
-.channel-item {
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 </style>
