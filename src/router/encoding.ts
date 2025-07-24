@@ -7,7 +7,7 @@ const encryption: IRouteItem = {
   children: [{
     path: '/base64',
     name: 'Base64编码',
-    component: () => import('@/pages/encoding/Base64.vue'),
+    component: () => import('@/pages/encoding/Base64Encoding.vue'),
     key: 'base64',
     meta: {
       seoHead: {
