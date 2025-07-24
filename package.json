@@ -66,8 +66,9 @@
     "lint-staged": "^15.4.3"
   },
   "lint-staged": {
-    "*.*": [
-      "eslint --cache"
+    "*.{js,jsx,ts,tsx,vue}": [
+      "eslint --cache --fix",
+      "git add"
     ]
   }
 }
