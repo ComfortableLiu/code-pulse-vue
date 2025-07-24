@@ -66,12 +66,13 @@ import { Mail, Github, Wechat } from '@icon-park/vue-next'
       display: flex;
       flex-direction: column;
       color: #CCCCCC;
+      gap: 8px;
 
       .contact-me {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 8px;
+        gap: 16px;
         font-size: 14px;
         color: #FFFFFF;
       }
