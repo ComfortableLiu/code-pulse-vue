@@ -64,7 +64,6 @@ import {
 } from "@/utils/router.ts";
 import type { RouteLocationNormalized } from "vue-router";
 import FirstVisitWelcome from "@/components/FirstVisitWelcome.vue";
-import ContactMe from "@/components/ContactMe.vue";
 
 // 高频路由数量
 const FREQUENT_ROUTE_HISTORY_NUM = 10;
