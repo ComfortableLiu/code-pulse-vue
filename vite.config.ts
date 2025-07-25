@@ -5,6 +5,9 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import sitemapPlugin from "vite-plugin-sitemap";
 import { routes } from "./src/router";
+import { viteExternalsPlugin } from "vite-plugin-externals";
+import Components from 'unplugin-vue-components/vite';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
 const isGithub = process.env.PUBLISH_ENV === 'github';
 
@@ -29,10 +32,36 @@ export default defineConfig({
         userAgent: '*',
       }],
       dynamicRoutes: list,
-    })
+    }),
+    {
+      name: 'cdn-inject',
+      transformIndexHtml(html) {
+        return html.replace(
+          '</head>',
+          `
+<script src="https://cdn.jsdelivr.net/npm/vue@3.5.17/dist/vue.global.prod.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-router@4.5.1/dist/vue-router.global.prod.min.js"></script>
+</head>`
+        )
+      }
+    },
+    viteExternalsPlugin({
+      // 格式：{ 包名: 全局变量名 }
+      vue: 'Vue',
+      'vue-router': 'VueRouter',
+    }),
+    Components({
+      resolvers: [
+        AntDesignVueResolver({
+          importStyle: false,
+        }),
+      ],
+    }),
   ],
   build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
+      external: ['vue', 'vue-router'],
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
